@@ -1,3 +1,5 @@
+import os
+
 class Config():
 
     pass
@@ -8,7 +10,7 @@ class ProdConfig(Config):
 
 class DevConfig(Config):
 
-    pass
+    DEBUG=True
 
 config_options={
 'production'=ProdConfig,
