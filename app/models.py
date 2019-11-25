@@ -5,7 +5,7 @@ from . import login_manager
 
 @login_manager.user_loader
 def load_user(user_id):
-    
+
     return User.query.get(int(user_id))
 
 
@@ -17,7 +17,7 @@ class User(UserMixin, db.Model):
     email=db.Column(db.String(255), unique = True, index = True)
     bio=db.Column(db.String(255))
     avatar=db.Column(db.String())
-    posts=db.Column()
+    posts=db.Column(db.String())
 
     password=db.Column(db.String(255))
 
@@ -39,6 +39,6 @@ class User(UserMixin, db.Model):
 class Post:
 
     __tablename__='posts'
-        id=db.Column(db.Integer, primary_key=True)
-        category=db.Column(db.String())
-        title=db.Column
+    id=db.Column(db.Integer, primary_key=True)
+    category=db.Column(db.String())
+    title=db.Column
