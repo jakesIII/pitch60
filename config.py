@@ -2,7 +2,7 @@ import os
 
 class Config():
 
-    pass
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:Jacques@localhost/minute'
 
 class ProdConfig(Config):
 
@@ -13,6 +13,6 @@ class DevConfig(Config):
     DEBUG=True
 
 config_options={
-'production'=ProdConfig,
-'development'=DevConfig
+'production':ProdConfig,
+'development':DevConfig
 }
