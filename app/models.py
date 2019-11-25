@@ -19,7 +19,9 @@ class User(UserMixin, db.Model):
     avatar=db.Column(db.String())
     posts=db.Column(db.String())
 
-    password=db.Column(db.String(255))
+    password_hash=db.Column(db.String(255))
+
+
 
     @property
     def password(self):
@@ -27,10 +29,10 @@ class User(UserMixin, db.Model):
 
     @password.setter
     def password(self, password):
-        self.pass_secure = generate_password_hash(password)
+        self.password_hash= generate_password_hash(password)
 
-    def verify_password(self, passwprd):
-        return check_password_hash(password)
+    def verify_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
 
     def __repr__(self):
