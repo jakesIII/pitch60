@@ -1,10 +1,17 @@
 from . import db
+from werkzeug.security import generate_password_hash,check_password_hash
+from flask_login import UserMixin
+from . import login_manager
+
+@login_manager.user_loader
+def load_user(user_id):
+    
+    return User.query.get(int(user_id))
 
 
-
-class User:
-
+class User(UserMixin, db.Model):
     __tablename__ = 'users'
+
     id =db.Column(db.Integer, primary_key = True)
     username=db.Column(db.String(255))
     email=db.Column(db.String(255), unique = True, index = True)
@@ -24,12 +31,14 @@ class User:
 
     def verify_password(self, passwprd):
         return check_password_hash(password)
+
+
     def __repr__(self):
         return f'User {self.username}'
 
 class Post:
 
-    def __init__(self, id, category, review):
-        self.id = id
-        self.category = category
-        self.review = review
+    __tablename__='posts'
+        id=db.Column(db.Integer, primary_key=True)
+        category=db.Column(db.String())
+        title=db.Column
