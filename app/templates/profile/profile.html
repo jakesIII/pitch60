@@ -8,7 +8,7 @@
   <div class="col-md-4">
 
     {% if user.profile_pic_path %}
-    <img src="{{url_for('static',filename=user.profile_pic_path)}}" alt="" class="rounded-circle my-2" height="200" width="200">
+    <img src="{{url_for('static',filename=user.avatar)}}" alt="" class="rounded-circle my-2" height="200" width="200">
     {%else%}
     <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png" class="rounded-circle my-2" height="200" width="200">
     {% endif %}

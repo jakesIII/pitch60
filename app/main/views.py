@@ -49,9 +49,10 @@ def update_pic(uname):
     if 'photo' in request.files:
         filename=photos.save(request.files['photo'])
         path=f'photos/{filename}'
-        user.profile_pic_path = path
+        user.avatar= path
         db.session.commit()
     return redirect(url_for('main.profile', uname=uname))
+
 
 @main.route('/post/comment/new/<int:id>', methods = ['GET', 'POST'])
 @login_required

@@ -38,9 +38,39 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f'User {self.username}'
 
-class Post:
-
+class Posts(db.Model):
     __tablename__='posts'
+
     id=db.Column(db.Integer, primary_key=True)
     category=db.Column(db.String())
-    title=db.Column
+    description=db.Column(db.String())
+    user =db.Column(db.String)
+
+    def save_post(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_posts(cls):
+        posts=Posts.query.all()
+        return posts
+
+    @classmethod
+    def get_user_posts(cls, user):
+        user_posts=Posts.query.filter_by(user=user).all
+        return user_posts
+
+
+    @classmethod
+    def view_posts(cls, category):
+        post_category=Posts.query.filter_by(category=category).all()
+
+        return post_category
+
+
+class Comments(db.Model):
+    __tablename__='comments'
+
+    id=db.Column(db.Integer, primary_key=True)
+    comment=db.Column(db.String)
+    posted_at=db.Column()
