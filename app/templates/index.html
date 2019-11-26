@@ -1,4 +1,4 @@
-{% extends 'bootstrap/base.html' %}
+{% extends 'base.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {%block styles%}
@@ -30,9 +30,9 @@
 
          <div class="text-center">
 
-           <a href="{{url_for('main.new_comment', post_id=post_id)}}"><button class="btn-outline-primary"type="button" name="button">Comment</button></a>
+           <a href="{{url_for('main.new_comment', post_id=post.id)}}"><button class="btn-outline-primary"type="button" name="button">Comment</button></a>
 
-           <a href="{{url_for('main.view_comment')}}">View Comments</a>
+           <a href="{{url_for('main.view_comment',post_id=post.id)}}">View Comments</a>
 
          </div>
 

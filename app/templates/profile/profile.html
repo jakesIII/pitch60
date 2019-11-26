@@ -1,4 +1,4 @@
-{% extends 'bootstrap/base.html'%}
+{% extends 'base.html'%}
 
 {% block content %}
 <div class="container">
@@ -8,7 +8,7 @@
   <div class="col-md-4">
 
     {% if user.profile_pic_path %}
-    <img src="{{url_for('static',filename=user.avatar)}}" alt="" class="rounded-circle my-2" height="200" width="200">
+    <img src="{{url_for('static',filename=user.avatar)}}" alt="" class="rounded-circle my-2 mb-2" height="200" width="200">
     {%else%}
     <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png" class="rounded-circle my-2" height="200" width="200">
     {% endif %}
@@ -17,12 +17,11 @@
    <form action="{{url_for('main.update_pic',uname=user.username)}}" method="post" enctype = "multipart/form-data">
 
      <input type="file"  name="photo" class="form-control" required>
-     <input class="m-1" type="submit">
+     <input class="m-2" type="submit">
    </form>
      {% endif %}
 
   </div>
-
 
 <!-- displaying  Username-->
   <div class="col-md-4">
@@ -34,11 +33,28 @@
     {%else%}
       <p> {{user.username| capitalize}} has no bio </p>
     {% endif %}
+
+    {% if user == current_user %}
+        <a href="{{url_for('main.update_profile',uname=user.username)}}">Edit profile</a>
+    {% endif %}
+
   </div>
 
-  {% if user == current_user %}
-      <a href="{{url_for('main.update_profile',uname=user.username)}}">Edit profile</a>
-  {% endif %}
+  <div class="container">
+    {% for post in posts %}
+    <div class="card">
+      <blockquote class="blockquote text-center">
+        <h4>{{post.category}}</h4>
+
+        <p>{{post.description}}</p>
+
+        <footer class="blockquote-footer"> {{post.author}}</footer>
+
+      </blockquote>
+    {% endfor %}
+  </div>
+
+
 
 
 </div>
