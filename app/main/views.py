@@ -24,7 +24,7 @@ def view_comment(post_id):
 @main.route('/user/<int:user_id>')
 def my_posts(user_id):
 
-    posts = Posts.query.filter_by(user_id=user_id).all()
+    posts = Posts.query.filter_by(user_id = user_id).all()
 
     return render_template("profile/profile.html", posts=posts)
 
@@ -44,6 +44,7 @@ def profile(uname):
 @main.route('/user/<uname>/update', methods=['GET', 'POST'])
 @login_required
 def update_profile(uname):
+
     user = User.query.filter_by(username=uname).first()
 
     if user is None:
@@ -57,7 +58,7 @@ def update_profile(uname):
         db.session.add(user)
         db.session.commit()
 
-        return redirect(url_for('.profile', uname=user.username, user_id=user_id))
+        return redirect(url_for('.profile', uname=user.username))
 
     return render_template('profile/update.html', form=form)
 
@@ -70,7 +71,7 @@ def update_pic(uname):
         path=f'photos/{filename}'
         user.avatar= path
         db.session.commit()
-    return redirect(url_for('main.profile', uname=uname, user_id=user_id))
+    return redirect(url_for('main.profile', uname=uname))
 
 
 @main.route('/new_posts', methods = ['GET', 'POST'])

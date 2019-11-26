@@ -42,9 +42,10 @@
 
   <div class="container text-center">
     <h3>Your Posts </h3>
+
     {% if posts %}
      {% for post in posts %}
-    <div class="card">
+      <div class="card">
       <blockquote class="blockquote text-center">
         <h4>{{post.category}}</h4>
 
@@ -53,9 +54,15 @@
         <footer class="blockquote-footer"> {{post.author}}</footer>
 
       </blockquote>
+      </div>
      {% endfor %}
-    {% endif %}
-  </div>
+     
+     {% else %}
+
+     <p>You don't have any posts yet.</p>
+
+     {% endif %}
+
 
 
 
