@@ -40,8 +40,10 @@
 
   </div>
 
-  <div class="container">
-    {% for post in posts %}
+  <div class="container text-center">
+    <h3>Your Posts </h3>
+    {% if posts %}
+     {% for post in posts %}
     <div class="card">
       <blockquote class="blockquote text-center">
         <h4>{{post.category}}</h4>
@@ -51,7 +53,8 @@
         <footer class="blockquote-footer"> {{post.author}}</footer>
 
       </blockquote>
-    {% endfor %}
+     {% endfor %}
+    {% endif %}
   </div>
 
 
