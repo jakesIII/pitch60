@@ -17,8 +17,8 @@ class User(UserMixin, db.Model):
     email=db.Column(db.String(255), unique = True, index = True)
     bio=db.Column(db.String(255))
     avatar=db.Column(db.String())
-    posts=db.Column(db.String())
-    posts=db.relationship('Posts' backref='user', lazy="dynamic")
+    # posts=db.Column(db.String())
+    posts=db.relationship('Posts', backref='user', lazy="dynamic")
     password_hash=db.Column(db.String(255))
 
 
@@ -44,7 +44,10 @@ class Posts(db.Model):
     id=db.Column(db.Integer, primary_key=True)
     category=db.Column(db.String())
     description=db.Column(db.String())
+    author=db.Column(db.String())
+
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
     comments=db.relationship('Comments', backref='post', lazy="dynamic")
 
     def save_post(self):
@@ -57,7 +60,7 @@ class Posts(db.Model):
         return posts
 
     @classmethod
-    def get_user_posts(cls, user):
+    def get_user_posts(cls, user_id):
         user_posts=Posts.query.filter_by(user_id=user_id).all
         return user_posts
 
@@ -82,6 +85,6 @@ class Comments(db.Model):
         db.session.commit()
 
     @classmethod
-    def get_comments(cls):
+    def get_comments(cls, post_id):
         comments = Comments.query.filter_by(post_id).all()
         return comments

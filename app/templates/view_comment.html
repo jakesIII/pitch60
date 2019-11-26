@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block content %}
+
+{% if comments %}
+{% for comment in comments %}
+
+<blockquote class="blockquote text-center">
+  <p>{{comment.comment}}</p>
+  <footer class="blockquote-footer" >{{comment.user}}</footer>
+</blockquote>
+
+{% endfor %}
+{% endif %}
+
+{% endblock %}

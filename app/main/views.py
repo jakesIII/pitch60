@@ -1,16 +1,28 @@
 from flask import render_template, request, redirect, url_for, abort
-from ..models import User
+from ..models import User, Posts, Comments
 from . import main
-from .forms import UpdateProfile
+from .forms import UpdateProfile, PostForm, CommentForm
 from flask_login import login_required
 from .. import db, photos
 
-@main.route('/')
+@main.route('/', methods=['GET'])
 def index():
 
-    title = 'Home - 60 mins pitch'
+    title = 'Home - minute/pitch'
 
-    return render_template('index.html')
+    posts = Posts.get_posts()
+
+    return render_template('index.html', title=title, posts=posts )
+
+@main.route('/posts_comments', methods=['GET'])
+def view_comment(post_id):
+
+    comments=Comments.get_comments(post_id)
+
+    return render_template('view_comment.html', comments = comments)
+
+
+
 
 
 @main.route('/user/<uname>')
@@ -54,7 +66,32 @@ def update_pic(uname):
     return redirect(url_for('main.profile', uname=uname))
 
 
-@main.route('/post/comment/new/<int:id>', methods = ['GET', 'POST'])
+@main.route('/new_posts', methods = ['GET', 'POST'])
 @login_required
-def new_comment(id):
-    pass
+def new_posts():
+
+    form = PostForm()
+
+    if form.validate_on_submit():
+        new_post = Posts (category=form.category.data, description= form.description.data, author=form.author.data)
+
+        new_post.save_post()
+
+        return redirect(url_for('main.index'))
+
+    return render_template('posteth.html', PostForm=form )
+
+@main.route('/new_comment', methods=['GET', 'POST'])
+@login_required
+def new_comment():
+
+    form = CommentForm()
+
+    if  form.validate_on_submit():
+        new_comment = Comments (comment = form.comment.data, user = form.user.data )
+
+        new_comment.save_comment()
+
+        return redirect (url_for('main.index'))
+
+    return render_template('commenteth.html', CommentForm = form )

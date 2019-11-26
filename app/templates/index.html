@@ -8,7 +8,47 @@
 
 
 {% block content %}
+<div class="container">
+  <div class="row">
+    <a class="text-center" href="{{url_for('main.new_posts')}}"><button type="button" class="btn btn-outline-primary" name="button">Post Something</button></a>
 
-  <h1>Display works</h1>
+  </div>
+
+  <div>
+    <h2>Your Feed</h2>
+    {% if posts %}
+      {% for post in posts %}
+      <div class="card">
+        <blockquote class="blockquote text-center">
+          <h4>{{post.category}}</h4>
+
+          <p>{{post.description}}</p>
+
+          <footer class="blockquote-footer"> {{post.author}}</footer>
+
+        </blockquote>
+
+         <div class="text-center">
+
+           <a href="{{url_for('main.new_comment')}}"><button class="btn-outline-primary"type="button" name="button">Comment</button></a>
+
+           <a href="{{url_for('main.view_comment')}}">View Comments</a>
+
+         </div>
+
+      </div>
+      {% endfor %}
+
+    {% else %}
+
+    Be the first to post...
+
+    {% endif %}
+  </div>
+
+
+
+</div>
+
 
 {% endblock %}
