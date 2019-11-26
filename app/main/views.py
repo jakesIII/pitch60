@@ -14,10 +14,10 @@ def index():
 
     return render_template('index.html', title=title, posts=posts )
 
-@main.route('/posts_comments', methods=['GET'])
+@main.route('/posts_comments/<int:post_id>', methods=['GET'])
 def view_comment(post_id):
 
-    comments=Comments.get_comments(post_id)
+    comments=Comments.query.filter_by(post_id=post_id).all()
 
     return render_template('view_comment.html', comments = comments)
 
@@ -81,15 +81,16 @@ def new_posts():
 
     return render_template('posteth.html', PostForm=form )
 
-@main.route('/new_comment', methods=['GET', 'POST'])
+@main.route('/post/new_comment/<int:post_id>', methods=['GET', 'POST'])
 @login_required
-def new_comment():
+def new_comment(post_id):
 
     form = CommentForm()
 
     if  form.validate_on_submit():
-        new_comment = Comments (comment = form.comment.data, user = form.user.data )
-
+        new_comment = Comments (comment = form.comment.data, user = form.user.data, post_id=post_id )
+        print('llllllllllllllllllllll')
+        print(post_id)
         new_comment.save_comment()
 
         return redirect (url_for('main.index'))
